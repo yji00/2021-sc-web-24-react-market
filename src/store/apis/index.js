@@ -34,12 +34,12 @@
 
 import axios from "axios";
 // import  { WEB_URL, CLIP_URL, IMG_URL, BLOG_URL, BOOK_URL, genConfig } from '../init'
-import  init, { genConfig } from '../init'
+import  init from '../init'
 
 
 const getSearchApi = async (query, searchEngine) => {
 	try {
-		const {data} = await axios(init[searchEngine], genConfig(query)) //구조분해 X 받아온 문자열 그대로 searchEngine에 들어감
+		const {data} = await axios(init[searchEngine], init.genConfig(query)) //구조분해 X 받아온 문자열 그대로 searchEngine에 들어감
 		return {
 			pageCnt: data.meta.pageable_count,
 			listCnt: data.meta.total_count,

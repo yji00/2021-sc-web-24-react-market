@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getWebAction } from '../actions/web-action'
 
-const name ='seacrch'
+const name ='web'
 
 const initialState = {
 	isQuering: false,
+	err: null,
 	query: '',
 	"isEnd": false,
 	"pageCnt": 0,
@@ -18,9 +20,27 @@ const reducers = {
 }
 
 const extraReducers = builder => builder
-.addCase()
-.addCase()
-.addCase()
+.addCase(getWebAction.pending, (state, { payload }) => {
+	state.isQuering = true
+})
+.addCase(getWebAction.fulfilled, (state, { payload }) => {
+	state.isQuering = false
+	state.err = null
+	state.isEnd = payload.isEnd
+	state.pageCnt = payload.pageCnt
+	state.listCnt = payload.listCnt
+	state.lists = payload.lists
+
+})
+.addCase(getWebAction.rejected, (state, { payload }) => {
+	state.isQuering = false
+	state.err = payload
+	state.query = ''
+	state.isEnd = false
+	state.pageCnt = 0
+	state.listCnt = 0
+	state.lists = []
+})
 
 const searchReducers = createSlice({ name, initialState, reducers, extraReducers })
 export default searchReducers
