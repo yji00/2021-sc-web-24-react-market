@@ -10,7 +10,7 @@ const Search = () => {
 
   const queryRef =useRef('')
   const onQuery = useCallback(e => {
-    e.prevnetDefault()
+    e.preventDefault()
   }, [])
 
   return (
