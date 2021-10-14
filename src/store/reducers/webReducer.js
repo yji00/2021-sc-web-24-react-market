@@ -42,5 +42,11 @@ const extraReducers = builder => builder
 	state.lists = []
 })
 
-const searchReducers = createSlice({ name, initialState, reducers, extraReducers })
-export default searchReducers
+const webReducers = createSlice({ name, initialState, reducers, extraReducers })
+
+export const getData = (query, cnt = 10, searchEngine = []) => (dispatch, getState) => {
+		dispatch(actQuery('query'))
+		dispatch(getWebAction('query'))
+}
+export const { actQuery } = webReducers.actions
+export default webReducers
