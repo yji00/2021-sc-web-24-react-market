@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getSearchAction } from '../actions/search-action'
 
-const name = 'web'
+const name = 'img'
 
-const getWebAction = getSearchAction(name)
+const getImgAction = getSearchAction(name)
 
 const initialState = {
 	query: '',
@@ -24,10 +24,10 @@ const reducers = {
 }
 
 const extraReducers = builder => builder
-.addCase(getWebAction.pending, (state, { payload }) => {
+.addCase(getImgAction.pending, (state, { payload }) => {
 	state.isQuering = true
 })
-.addCase(getWebAction.fulfilled, (state, { payload }) => {
+.addCase(getImgAction.fulfilled, (state, { payload }) => {
 	state.isQuering = false
 	state.err = null
 	state.isEnd = payload.isEnd
@@ -38,7 +38,7 @@ const extraReducers = builder => builder
 	else
 		state.lists = payload.lists
 })
-.addCase(getWebAction.rejected, (state, { payload }) => {
+.addCase(getImgAction.rejected, (state, { payload }) => {
 	state.isQuering = false
 	state.err = payload
 	state.query = ''
@@ -49,15 +49,16 @@ const extraReducers = builder => builder
 	state.isAdd = false
 })
 
-const webReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getWebData = (query, options = {}) => (dispatch, getState) => {
-	let size = options.size || 50
+const ImgReducers = createSlice({ name, initialState, reducers, extraReducers })
+
+const getImgData = (query, options = {}) => (dispatch, getState) => {
+	let size = options.size || 80
 	let page = options.page || 1
-	dispatch(getWebAction({ query, size, page }))
+	if(query) dispatch(getImgAction({ query, size, page }))
 }
 
-export { getWebAction, getWebData }
-export const { reset, actIsAdd } = webReducers.actions
-export default webReducers
+export { getImgAction, getImgData }
+export const { reset, actIsAdd } = ImgReducers.actions
+export default ImgReducers
 
