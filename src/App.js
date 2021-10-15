@@ -11,37 +11,23 @@ import Book from "./pages/Book"
 
 function App() {
 	return (
+		<div className="wrapper">
 		<BrowserRouter>
 			{/* <header className="header-wrapper">
 				<Link to="/">Home</Link>
 				<Link to="/about">About</Link>
 			</header> */}
-			<div className="wrapper">
 				<Switch>
-					<Route exact path="/">
-						<Home />
-					</Route>
-					<Route exact path="/all">
-						<All />
-					</Route>
-					<Route exact path="/web">
-						<Web />
-					</Route>
-					<Route exact path="/img">
-						<Img />
-					</Route>
-					<Route exact path="/clip">
-						<Clip />
-					</Route>
-					<Route exact path="/blog">
-						<Blog />
-					</Route>
-					<Route exact path="/book">
-						<Book />
-					</Route>
+					<Route exact path="/" component={ Home } />						{/* exact 뒤에붙는 문자들은 받지 않음 */}
+					<Route exact path="/all" component={ All } />
+					<Route exact path="/web" component={ Web } />
+					<Route exact path="/img" component={ Img } />
+					<Route exact path="/clip" component={ Clip } />
+					<Route exact path="/blog" component={ Blog } />
+					<Route exact path="/book" component={ Book } />
 				</Switch>
-			</div>
 		</BrowserRouter>
+		</div>
 	);
 }
 
