@@ -1,9 +1,23 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components'
+import { color, size, media, flex } from '../styled/variables'
 
 const Form = styled.div`
-  max-width: 80%;
-  margin: auto;
+	width: 80%;
+	max-width: 767px;
+	margin: auto;
+	@media ${ media.md } {
+		width: 94%;
+	}
+`
+
+const SearchInput = styled.input`
+	border-color: ${ color.danger };
+	&:focus {
+		border-color: ${ color.danger };
+		box-shadow: 0 0 0 0.2rem rgb(255 0 123 / 25%);
+		outline: 0;
+	}
 `
 
 const Search = () => {
@@ -16,7 +30,7 @@ const Search = () => {
   return (
     <Form>
       <form onSubmit={ onQuery } className="input-group cherry">
-        <input type="text" rel={ queryRef } className="form-control border-danger" name="query" placeholder="검색어를 입력하세요." />
+      <SearchInput type="text" rel={ queryRef } className="form-control" name="query" placeholder="검색어를 입력하세요." autoFocus />
         <div className="input-group-append">
         <button className="btn btn-danger">검색</button>
         </div>
