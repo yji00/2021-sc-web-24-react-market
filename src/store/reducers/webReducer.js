@@ -51,13 +51,11 @@ const extraReducers = builder => builder
 
 const webReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getWebData = (query, options = {}) => (dispatch, getState) => {
-	let size = options.size || 50
-	let page = options.page || 1
-	dispatch(getWebAction({ query, size, page }))
+const getWebData = (query, size = 10) => (dispatch, getState) => {
+	// dispatch(actQuery(query))
+	dispatch(getWebAction({ query, size }))
 }
 
 export { getWebAction, getWebData }
-export const { reset, actIsAdd } = webReducers.actions
+export const { actQuery } = webReducers.actions
 export default webReducers
-

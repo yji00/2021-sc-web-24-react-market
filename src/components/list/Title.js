@@ -6,18 +6,14 @@ import { color, font } from '../../styled/variables'
 
 const My = styled.div`
   color: ${ props => props.color !== '' ? props.color : color.darker };
-  &:hover {
-    color: ${props => props.hoverColor !== '' ? props.hoverColor : props.color }
-  }
   font-size: ${ props => props.size };
-  font-weight: 300;
 `
 
 
-const Content = ({ value, size='1em', color='', hoverColor='' }) => {
+const Title = ({ value, size='1em', color='' }) => {
   return (
-    <My color={ color } size ={size} hoverColor={ hoverColor } >{ parse(value) }</My>
+    <My color={ color } size ={size}>{ parse(value) }</My>
   );
 }
 
-export default Content;
+export default Title;
