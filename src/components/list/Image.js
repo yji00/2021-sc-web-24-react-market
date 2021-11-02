@@ -1,26 +1,36 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components'
-import { color, media, font } from '../styled/variables'
+import parse from 'html-react-parser'
+import { color, font } from '../../styled/variables'
 
-const List = styled.div`
 
+const My = styled.div`
+  cursor: pointer;
+  overflow: hidden;
+  img{
+    transition: all .35s;
+  }
+  &:hover {
+    img{
+        transform: scale()(1.1);
+        opacity: .875;
+      }
+    }
 `
 
-const Title = styled.h3`
 
-`
+const Content = ({ src, thumb }) => {
 
-const Content = styled.p`
+  const onClick = useCallback(e => {
 
-`
+  }, [])
 
-const Weblist = () => {
   return (
-    <List>
-      <Title></Title>
-      <Content></Content>
-    </List>
+    <My>
+      <img src={ thumb } alt={ src } className="w-100" onClick={ onClick } />
+    </My>
+
   );
 }
 
-export default Weblist;
+export default Content;

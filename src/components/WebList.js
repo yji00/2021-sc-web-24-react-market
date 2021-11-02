@@ -19,9 +19,6 @@ const Contents = styled.div`
 	margin-bottom: .75em;
 	line-height: 1.25em;
 `
-const Infomation = styled.div`
-
-`
 
 
 const Weblist = ({ data }) => {
