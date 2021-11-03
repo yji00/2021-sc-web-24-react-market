@@ -51,13 +51,12 @@ const extraReducers = builder => builder
 
 const blogReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getBlogData = (query, options = {}) => (dispatch, getState) => {
-	let size = options.size || 50
-	let page = options.page || 1
-	dispatch(getBlogAction({ query, size, page }))
+const getBlogData = (query, size = 10) => (dispatch, getState) => {
+	// dispatch(actQuery(query))
+	dispatch(getBlogAction({ query, size }))
 }
 
 export { getBlogAction, getBlogData }
-export const { reset, actIsAdd } = blogReducers.actions
+export const { actQuery } = blogReducers.actions
 export default blogReducers
 

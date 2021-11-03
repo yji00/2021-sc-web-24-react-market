@@ -19,13 +19,13 @@ const My = styled.div`
 `
 
 
-const Content = ({ src, thumb, isImg=false }) => {
+const Content = ({ src=null, thumb, isImg=false }) => {
 
   const onClick = useCallback(e => {
     if(isImg) {
       //모달창
     }
-    else window.open(src) //새창 오픈
+    else if(src) window.open(src) //새창 오픈
   }, [isImg, src ])
 
   return (
