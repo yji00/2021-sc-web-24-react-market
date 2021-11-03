@@ -11,6 +11,7 @@ import NaviBar from '../components/NaviBar'
 import TitleSearch from '../components/TitleSearch'
 import WebList from '../components/WebList'
 import ImgList from '../components/ImgList'
+import ClipList from '../components/ClipList'
 
 const ListWrapper =styled.div`
 	margin: 1em 0;
@@ -23,10 +24,13 @@ const ImgWrapper = styled(ListWrapper)`
 	flex-wrap: wrap;
 `
 
+const ClipWrapper =styled(ListWrapper)``
+
 const Home = () => {
 	const query = useSelector(state => state.data.query)
 	const webList = useSelector(state => state.web.lists)
 	const imgList = useSelector(state => state.img.lists)
+	const clipList = useSelector(state => state.clip.lists)
 
 
 	return (
@@ -48,6 +52,10 @@ const Home = () => {
 						</ImgWrapper>
 
 						<TitleSearch name="Movie clip" link="/clip" />
+						<ClipWrapper>
+						{ clipList.map(v => <ClipList data={ v } key={ uuid() }/>) }
+						</ClipWrapper>
+
 						<TitleSearch name="Blog" link="/blog" />
 						<TitleSearch name="Book" link="/book" />
 					</div> 

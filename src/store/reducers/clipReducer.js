@@ -51,13 +51,12 @@ const extraReducers = builder => builder
 
 const clipReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getClipData = (query, options = {}) => (dispatch, getState) => {
-	let size = options.size || 15
-	let page = options.page || 1
-	dispatch(getClipAction({ query, size, page }))
+const getClipData = (query, size = 10) => (dispatch, getState) => {
+	// dispatch(actQuery(query))
+	dispatch(getClipAction({ query, size }))
 }
 
 export { getClipAction, getClipData }
-export const { reset, actIsAdd } = clipReducers.actions
+export const { actQuery } = clipReducers.actions
 export default clipReducers
 

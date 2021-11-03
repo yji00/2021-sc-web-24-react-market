@@ -49,7 +49,7 @@ const Imglist = ({ data }) => {
 	return (
 		<List>
 			<Imgs>
-				<Image src={ data.image_url } thumb={ data.thumbnail_url } />
+				<Image src={ data.image_url } thumb={ data.thumbnail_url } isImg={ true } />
 			</Imgs>
 			<Titles href={ data.doc_url }  target="_blank">
 				<Collection>{ data.collection }</Collection>

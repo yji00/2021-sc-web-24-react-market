@@ -44,7 +44,7 @@ const Search = () => {
 		e.preventDefault()
 		dispatch(getWebData(query, 10))
 		dispatch(getImgData(query, 14))
-		dispatch(getClipData(query, 14))
+		dispatch(getClipData(query, 10))
 		dispatch(getBlogData(query, 10))
 		dispatch(getBookData(query, 10))
     dispatch(actQuery(query))
