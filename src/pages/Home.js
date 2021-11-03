@@ -24,6 +24,7 @@ const ImgWrapper = styled(ListWrapper)`
 `
 
 const Home = () => {
+	const query = useSelector(state => state.data.query)
 	const webList = useSelector(state => state.web.lists)
 	const imgList = useSelector(state => state.img.lists)
 
@@ -33,19 +34,26 @@ const Home = () => {
 			<TitleBar />
 			<Search />
 			<NaviBar />
-			<TitleSearch name="website" link="/web" />
-			<WebWrapper>
-				{ webList.map(v => <WebList data={ v } key={ uuid() }/>) }
-			</WebWrapper>
-			
-			<TitleSearch name="Image" link="/img" />
-			<ImgWrapper>
-				{ imgList.map(v => <ImgList data={ v } key={ uuid() }/>) }
-			</ImgWrapper>
+			{
+				query != '' 
+				? <div>
+						<TitleSearch name="website" link="/web" />
+						<WebWrapper>
+							{ webList.map(v => <WebList data={ v } key={ uuid() }/>) }
+						</WebWrapper>
+						
+						<TitleSearch name="Image" link="/img" />
+						<ImgWrapper>
+							{ imgList.map(v => <ImgList data={ v } key={ uuid() }/>) }
+						</ImgWrapper>
 
-			<TitleSearch name="Movie clip" link="/clip" />
-			<TitleSearch name="Blog" link="/blog" />
-			<TitleSearch name="Book" link="/book" />
+						<TitleSearch name="Movie clip" link="/clip" />
+						<TitleSearch name="Blog" link="/blog" />
+						<TitleSearch name="Book" link="/book" />
+					</div> 
+				: ''
+			}
+
 		</div>
 	)
 }

@@ -7,7 +7,7 @@ import { getImgData } from '../store/reducers/imgReducer'
 import { getClipData } from '../store/reducers/clipReducer'
 import { getBlogData } from '../store/reducers/blogReducer'
 import { getBookData } from '../store/reducers/bookReducer'
-import { actQuery } from '../store/reducers/queryReducer'
+import { actQuery } from '../store/reducers/dataReducer'
 
 const Form = styled.div`
 	width: 80%;

@@ -6,7 +6,7 @@ import { color, font, media, align } from '../styled/variables'
 const NaviWrap = styled.div`
   text-align: ${ align.ct };
 	padding: 1em 0;
-	color: ${ color.warning };
+	color: ${ color.default };
 	margin: 1.5em;
 `
 const NaviLink = styled(Link)`
