@@ -51,13 +51,12 @@ const extraReducers = builder => builder
 
 const bookReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getBookData = (query, options = {}) => (dispatch, getState) => {
-	let size = options.size || 50
-	let page = options.page || 1
-	dispatch(getBookAction({ query, size, page }))
+const getBookData = (query, size = 10) => (dispatch, getState) => {
+	// dispatch(actQuery(query))
+	dispatch(getBookAction({ query, size }))
 }
 
 export { getBookAction, getBookData }
-export const { reset, actIsAdd } = bookReducers.actions
+export const { actQuery } = bookReducers.actions
 export default bookReducers
 
