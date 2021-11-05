@@ -58,13 +58,14 @@ const Contents = styled.div`
 	font-size: 1rem;
 	line-height: 1.25em;
 `
-
+const noImg = '//via.placeholder.com/130x130/d3213e/FFFFFF?text=no+Image'
 
 const Bloglist = ({ data }) => {
 	return (
 		<List>
 			<Imgs>
-				<Image thumb={ data.thumbnail } src={ data.url } />
+			{/* <Image thumb={ data.thumbnail } src={ data.url } /> */}
+			<Image thumb={ data.thumbnail !== '' ? data.thumbnail : noImg } src={ data.url } />
 			</Imgs>
 			<ContentWrap>
 				<Titles href={ data.url }  target="_blank">
