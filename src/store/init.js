@@ -6,7 +6,6 @@ const BLOG_URL = 'https://dapi.kakao.com/v2/search/blog'
 const BOOK_URL = 'https://dapi.kakao.com/v3/search/book'
 
 const genConfig = (payload) => {
-	console.log(payload)
 	return {
 		params: { ...payload },
 		headers: { Authorization: KEY }

@@ -17,10 +17,7 @@ const initialState = {
 }
 
 const reducers = {
-	reset: () => initialState,
-	actIsAdd: (state, { payload }) => {
-		state.isAdd = payload
-	}
+	reset: () => initialState
 }
 
 const extraReducers = builder => builder
@@ -33,10 +30,7 @@ const extraReducers = builder => builder
 	state.isEnd = payload.isEnd
 	state.pageCnt = payload.pageCnt
 	state.listCnt = payload.listCnt
-	if(state.isAdd)
-		state.lists = [...state.lists, ...payload.lists]
-	else
-		state.lists = payload.lists
+	state.lists = [...state.lists, ...payload.lists]
 })
 .addCase(getBlogAction.rejected, (state, { payload }) => {
 	state.isQuering = false
@@ -51,12 +45,14 @@ const extraReducers = builder => builder
 
 const blogReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getBlogData = (query, size = 10) => (dispatch, getState) => {
-	// dispatch(actQuery(query))
-	dispatch(getBlogAction({ query, size }))
+
+const getBlogData = (query, options = {}) => (dispatch, getState) => {
+	let size = options.size || 50
+	let page = options.page || 1
+	dispatch(getBlogAction({ query, size, page }))
 }
 
 export { getBlogAction, getBlogData }
-export const { actQuery } = blogReducers.actions
+export const { reset } = blogReducers.actions
 export default blogReducers
 

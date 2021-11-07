@@ -48,13 +48,17 @@ const Home = () => {
 	const blogList = useSelector(state => state.blog.lists)
 	const bookList = useSelector(state => state.book.lists)
 
-	useEffect(() => {
+	useEffect(() => { //시작할때 한번만 실행
+		dispatch(actQuery(''))
+	}, [dispatch]);
+
+	useEffect(() => { //Query가 바뀌면 실행
 		if(query && query !== ''){
-			dispatch(getWebData(query, 10))
-			dispatch(getImgData(query, 14))
-			dispatch(getClipData(query, 10))
-			dispatch(getBlogData(query, 10))
-			dispatch(getBookData(query, 10))
+			dispatch(getWebData(query, { size:10 }))
+			dispatch(getImgData(query, { size:14 }))
+			dispatch(getClipData(query, { size:10 }))
+			dispatch(getBlogData(query, { size:10 }))
+			dispatch(getBookData(query, { size:10 }))
 		}
 
 	}, [dispatch, query]);
@@ -69,10 +73,6 @@ const Home = () => {
 			{
 				query != '' 
 				? <div>
-						<TitleSearch name="website" link="/web" />
-						<WebWrapper>
-							{ webList.map(v => <WebList data={ v } key={ uuid() }/>) }
-						</WebWrapper>
 						
 						<TitleSearch name="Image" link="/img" />
 						<ImgWrapper>
@@ -83,6 +83,11 @@ const Home = () => {
 						<ClipWrapper>
 						{ clipList.map(v => <ClipList data={ v } key={ uuid() }/>) }
 						</ClipWrapper>
+
+						<TitleSearch name="website" link="/web" />
+						<WebWrapper>
+							{ webList.map(v => <WebList data={ v } key={ uuid() }/>) }
+						</WebWrapper>
 
 						<TitleSearch name="Blog" link="/blog" />
 						<BlogWrapper>

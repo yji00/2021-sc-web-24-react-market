@@ -39,11 +39,14 @@ import  init from '../init'
 
 const getSearchApi = async (payload, searchEngine) => {
 	try {
-		const {data} = await axios(init[searchEngine], init.genConfig(payload)) //구조분해 X 받아온 문자열 그대로 searchEngine에 들어감
-		return {
-			pageCnt: data.meta.pageable_count,
-			listCnt: data.meta.total_count,
-			lists: data.documents
+		if(payload && payload !== '') {
+			const { data } = await axios(init[searchEngine], init.genConfig(payload))
+			console.log(data)
+			return {
+				pageCnt: data.meta.pageable_count,
+				listCnt: data.meta.total_count,
+				lists: data.documents
+			}
 		}
 	}
 	catch(err) {

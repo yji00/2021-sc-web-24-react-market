@@ -12,15 +12,11 @@ const initialState = {
 	isEnd: false,
 	pageCnt: 0,
 	listCnt: 0,
-	lists: [],
-	isAdd: false
+	lists: []
 }
 
 const reducers = {
-	reset: () => initialState,
-	actIsAdd: (state, { payload }) => {
-		state.isAdd = payload
-	}
+	reset: () => initialState
 }
 
 const extraReducers = builder => builder
@@ -33,10 +29,7 @@ const extraReducers = builder => builder
 	state.isEnd = payload.isEnd
 	state.pageCnt = payload.pageCnt
 	state.listCnt = payload.listCnt
-	if(state.isAdd)
-		state.lists = [...state.lists, ...payload.lists]
-	else
-		state.lists = payload.lists
+	state.lists = [...state.lists, ...payload.lists]
 })
 .addCase(getClipAction.rejected, (state, { payload }) => {
 	state.isQuering = false
@@ -46,17 +39,17 @@ const extraReducers = builder => builder
 	state.pageCnt = 0
 	state.listCnt = 0
 	state.lists = []
-	state.isAdd = false
 })
 
 const clipReducers = createSlice({ name, initialState, reducers, extraReducers })
 
-const getClipData = (query, size = 10) => (dispatch, getState) => {
-	// dispatch(actQuery(query))
-	dispatch(getClipAction({ query, size }))
+const getClipData = (query, options = {}) => (dispatch, getState) => {
+	let size = options.size || 15
+	let page = options.page || 1
+	dispatch(getClipAction({ query, size, page }))
 }
 
 export { getClipAction, getClipData }
-export const { actQuery } = clipReducers.actions
+export const { reset } = clipReducers.actions
 export default clipReducers
 
