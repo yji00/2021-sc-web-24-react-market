@@ -20,6 +20,7 @@ const ListWrapper =styled.div`
 
 const WebWrapper = styled(ListWrapper)``
 const Header = styled.header`
+	margin-top:1em;
 	display: flex;
 `
 
@@ -30,9 +31,6 @@ const Web = () => {
 
 	useEffect(() => {
 		dispatch(getWebData(query, 50))
-		return () => {
-			dispatch(actQuery(''))
-		}
 	}, [dispatch, query]);
 
 	return (
@@ -43,7 +41,7 @@ const Web = () => {
 			</Header>
 			<NaviBar />
 			{
-				query != '' 
+				query !== '' 
 				? <div>
 						<TitleSearch name="website" link="/web" />
 						<WebWrapper>
