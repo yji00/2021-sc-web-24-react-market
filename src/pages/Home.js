@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector,  useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid'
 import styled from 'styled-components'
@@ -12,6 +12,7 @@ import { getBlogData } from '../store/reducers/blogReducer'
 import { getBookData } from '../store/reducers/bookReducer'
 
 import TitleBar from '../components/TitleBar'
+import Modal from '../components/Modal'
 import Search from '../components/Search'
 import NaviBar from '../components/NaviBar'
 import TitleSearch from '../components/TitleSearch'
@@ -48,6 +49,9 @@ const Home = () => {
 	const blogList = useSelector(state => state.blog.lists)
 	const bookList = useSelector(state => state.book.lists)
 
+	const [modal, setModal] = useState(false)
+	const [src, setSrc] = useState()
+
 	useEffect(() => { //시작할때 한번만 실행
 		dispatch(actQuery(''))
 	}, [dispatch]);
@@ -63,7 +67,14 @@ const Home = () => {
 
 	}, [dispatch, query]);
 
+	const handleModalClose = useCallback(v => {
+		setModal(v)
+	},[])
 
+	const handleModalOpen = useCallback(src => {
+		setSrc(src)
+		setModal(true)
+	},[])
 
 	return (
 		<div>
@@ -76,7 +87,7 @@ const Home = () => {
 						
 						<TitleSearch name="Image" link="/img" />
 						<ImgWrapper>
-							{ imgList.map(v => <ImgList data={ v } key={ uuid() }/>) }
+							{ imgList.map(v => <ImgList data={ v } key={ uuid() } handle={ handleModalOpen } />) }
 						</ImgWrapper>
 
 						<TitleSearch name="Movie clip" link="/clip" />
@@ -101,7 +112,7 @@ const Home = () => {
 					</div> 
 				: ''
 			}
-
+			{ modal ? <Modal src={ src } handle={  handleModalClose } /> : ''}
 		</div>
 	)
 }

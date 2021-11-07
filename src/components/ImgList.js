@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components'
 import { color, media, font } from '../styled/variables'
 
@@ -45,9 +45,14 @@ const Name = styled.div`
 	color: ${ color.grey }
 `
 
-const Imglist = ({ data }) => {
+const Imglist = ({ data, handle }) => {
+
+	const onModalShow =useCallback(() => {
+		handle(data.image_url)
+	},[data.image_url, handle])
+
 	return (
-		<List>
+		<List onClick={ onModalShow }>
 			<Imgs>
 				<Image src={ data.image_url } thumb={ data.thumbnail_url } isImg={ true } />
 			</Imgs>

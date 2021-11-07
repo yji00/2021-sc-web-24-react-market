@@ -7,6 +7,7 @@ import { InView  } from 'react-intersection-observer';
 import styled from 'styled-components'
 import { font, color } from '../styled'
 
+import Modal from '../components/Modal'
 import Logo from '../components/Logo'
 import Search from '../components/Search'
 import NaviBar from '../components/NaviBar'
@@ -36,6 +37,8 @@ const Img = () => {
 	const query = useSelector(state => state.data.query)
 	const imgList = useSelector(state => state.img.lists)
 	const [page, setPage] = useState(1)
+	const [modal, setModal] = useState(false)
+	const [src, setSrc] = useState()
 
 	useEffect(() => {
 		setPage(1)
@@ -52,6 +55,16 @@ const Img = () => {
 		}
 	}, [dispatch, page, query])
 
+	const handleModalClose = useCallback(v => {
+		setModal(v)
+	},[])
+
+	const handleModalOpen = useCallback(src => {
+		setSrc(src)
+		setModal(true)
+	},[])
+
+
 	return (
 		<Wrapper>
 			<Header>
@@ -64,12 +77,13 @@ const Img = () => {
 				? <div>
 						<TitleSearch name="Image" link="/img" />
 						<ImgWrapper>
-							{ imgList.map(v => <ImgList data={ v } key={ uuid() }/>) }
+							{ imgList.map(v => <ImgList data={ v } key={ uuid() } handle={ handleModalOpen } />) }
 						</ImgWrapper>
 					</div> : ''
 			}
 			<InView onChange={onChangeView} >
 			</InView>
+			{ modal ? <Modal src={ src } handle={  handleModalClose } /> : ''}
 		</Wrapper>
 	)
 }
