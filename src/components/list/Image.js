@@ -19,7 +19,7 @@ const My = styled.div`
 `
 
 
-const Content = ({ src=null, thumb, isImg=false }) => {
+const Image = ({ src=null, thumb, isImg=false }) => {
 
   const onClick = useCallback(e => {
     if(isImg) {
@@ -28,12 +28,16 @@ const Content = ({ src=null, thumb, isImg=false }) => {
     else if(src) window.open(src) //새창 오픈
   }, [isImg, src ])
 
+  const onError = useCallback(e => {
+    e.target.src = thumb
+  }, [])
+
   return (
     <My>
-      <img src={ thumb } alt={ thumb } className="w-100" onClick={ onClick } />
+      <img src={ thumb } alt={ thumb } className="w-100" onClick={ onClick } onError={ onError }/>
     </My>
 
   );
 }
 
-export default Content;
+export default Image;
