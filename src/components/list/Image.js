@@ -28,13 +28,10 @@ const Image = ({ src=null, thumb, isImg=false }) => {
     else if(src) window.open(src) //새창 오픈
   }, [isImg, src ])
 
-  const onError = useCallback(e => {
-    e.target.src = thumb
-  }, [])
 
   return (
     <My>
-      <img src={ thumb } alt={ thumb } className="w-100" onClick={ onClick } onError={ onError }/>
+      <img src={ thumb } alt="" className="w-100" onClick={ onClick } />
     </My>
 
   );
