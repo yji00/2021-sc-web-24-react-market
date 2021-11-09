@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  getBookData } from '../store/reducers/bookReducer'
+import {  getBookData, reset, actIsAdd } from '../store/reducers/bookReducer'
 import { v4 as uuid } from 'uuid'
 import { InView } from 'react-intersection-observer';
 
@@ -16,18 +16,16 @@ import BookList from '../components/BookList'
 const Wrapper = styled.div`
 	padding-bottom: 5em;
 `
-
-const ListWrapper =styled.div`
+const ListWrapper = styled.div`
 	margin: 1em 0;
-	margin-bottom: 1em;
+	padding-bottom: 1em;
 `
-
 const BookWrapper = styled(ListWrapper)`
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap : wrap;
 `
 const Header = styled.header`
-	margin-top:1em;
+	margin-top: 1em;
 	display: flex;
 `
 
@@ -36,18 +34,26 @@ const Book = () => {
 	const query = useSelector(state => state.data.query)
 	const bookList = useSelector(state => state.book.lists)
 	const [page, setPage] = useState(1)
-
+	
 	useEffect(() => {
+		dispatch(reset())
+		setPage(1)
+		return () => {
+			dispatch(reset())
+		}
+	}, [dispatch])
+	
+	useEffect(() => {
+		dispatch(reset())
 		setPage(1)
 		dispatch(getBookData(query))
 	}, [dispatch, query]);
-
+	
 	const onChangeView = useCallback((inView, entry) => {
-		if(inView) {
-			if(page < 50) {
-				dispatch(getBookData(query, { page: page + 1 }))
-				setPage(page + 1)
-			}
+		if(inView && page < 50) {
+			dispatch(actIsAdd(true))
+			dispatch(getBookData(query, { page: page + 1 }))
+			setPage(page + 1)
 		}
 	}, [dispatch, page, query])
 
@@ -74,4 +80,4 @@ const Book = () => {
 	)
 }
 
-export default Book
+export default React.memo(Book)

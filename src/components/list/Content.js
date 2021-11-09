@@ -20,4 +20,4 @@ const Content = ({ value, size='1em', color='', hoverColor='' }) => {
   );
 }
 
-export default Content;
+export default React.memo(Content)

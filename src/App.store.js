@@ -9,8 +9,8 @@ import { getBookData } from './store/reducers/bookReducer' //동기 액션, cust
 
 function App() {
 
-	const dispatch = useDispatch()
-	const { web, img, clip, blog, book } = useSelector(state => state) //state
+	const dispatch = useDispatch()// dispatch((dispatch, getState) => {})
+	const web = useSelector(state => state.web) // state
 
 	const onQueryWeb = useCallback((e) => {
 		// dispatch(getWebData('react', 10, ['web', 'Clip', 'img', 'blog', 'book']))

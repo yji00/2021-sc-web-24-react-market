@@ -60,7 +60,7 @@ const Contents = styled.div`
 `
 const noImg = '//via.placeholder.com/130x130/d3213e/FFFFFF?text=no+Image'
 
-const Bloglist = ({ data }) => {
+const BlogList = ({ data }) => {
 	return (
 		<List>
 			<Imgs>
@@ -84,4 +84,4 @@ const Bloglist = ({ data }) => {
 	);
 }
 
-export default Bloglist;
+export default React.memo(BlogList)

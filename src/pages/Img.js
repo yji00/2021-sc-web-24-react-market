@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  getImgData } from '../store/reducers/imgReducer'
+import {  getImgData, reset, actIsAdd } from '../store/reducers/imgReducer'
 import { v4 as uuid } from 'uuid'
 import { InView  } from 'react-intersection-observer';
 
@@ -17,18 +17,16 @@ import ImgList from '../components/ImgList'
 const Wrapper = styled.div`
 	padding-bottom: 5em;
 `
-
-const ListWrapper =styled.div`
+const ListWrapper = styled.div`
 	margin: 1em 0;
-	margin-bottom: 1em;
+	padding-bottom: 1em;
 `
-
 const ImgWrapper = styled(ListWrapper)`
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap : wrap;
 `
 const Header = styled.header`
-	margin-top:1em;
+	margin-top: 1em;
 	display: flex;
 `
 
@@ -40,32 +38,38 @@ const Img = () => {
 	const [modal, setModal] = useState(false)
 	const [src, setSrc] = useState('')
 	const [thumb, setThumb] = useState('')
-
+	
 	useEffect(() => {
+		dispatch(reset())
+		setPage(1)
+		return () => {
+			dispatch(reset())
+		}
+	}, [dispatch])
+	
+	useEffect(() => {
+		dispatch(reset())
 		setPage(1)
 		dispatch(getImgData(query))
 	}, [dispatch, query]);
 
 	const onChangeView = useCallback((inView, entry) => {
-		if(inView) {
-			console.log('Inview:', inView)
-			if(page < 50){
-				dispatch(getImgData(query, { page: page + 1 }))
-				setPage(page + 1)
-			}
+		if(inView && page < 50) {
+			dispatch(actIsAdd(true))
+			dispatch(getImgData(query, { page: page + 1 }))
+			setPage(page + 1)
 		}
 	}, [dispatch, page, query])
 
 	const handleModalClose = useCallback(v => {
 		setModal(v)
-	},[])
+	}, [])
 
 	const handleModalOpen = useCallback((src, thumb) => {
 		setSrc(src)
 		setThumb(thumb)
 		setModal(true)
-	},[])
-
+	}, [])
 
 	return (
 		<Wrapper>
@@ -79,15 +83,14 @@ const Img = () => {
 				? <div>
 						<TitleSearch name="Image" link="/img" />
 						<ImgWrapper>
-							{ imgList.map(v => <ImgList data={ v } key={ uuid() } handle={ handleModalOpen } />) }
+							{ imgList.map(v => <ImgList data={ v } key={ uuid() } handle={ handleModalOpen }/>) }
 						</ImgWrapper>
 					</div> : ''
 			}
-			<InView onChange={onChangeView} >
-			</InView>
+			<InView onChange={onChangeView}>&nbsp;</InView>
 			{ modal ? <Modal src={ src } thumb={ thumb } handle={ handleModalClose } /> : '' }
 		</Wrapper>
 	)
 }
 
-export default Img
+export default React.memo(Img)

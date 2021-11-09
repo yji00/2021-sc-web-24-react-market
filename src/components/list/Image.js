@@ -37,4 +37,4 @@ const Image = ({ src=null, thumb, isImg=false }) => {
   );
 }
 
-export default Image;
+export default React.memo(Image)

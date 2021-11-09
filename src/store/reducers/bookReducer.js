@@ -17,7 +17,10 @@ const initialState = {
 }
 
 const reducers = {
-	reset: () => initialState
+	reset: () => initialState,
+	actIsAdd: (state, { payload }) => {
+		state.isAdd = payload
+	}
 }
 
 const extraReducers = builder => builder
@@ -30,7 +33,10 @@ const extraReducers = builder => builder
 	state.isEnd = payload.isEnd
 	state.pageCnt = payload.pageCnt
 	state.listCnt = payload.listCnt
-	state.lists = [...state.lists, ...payload.lists]
+	if(state.isAdd)
+		state.lists = [...state.lists, ...payload.lists]
+	else
+		state.lists = payload.lists
 })
 .addCase(getBookAction.rejected, (state, { payload }) => {
 	state.isQuering = false
@@ -52,6 +58,6 @@ const getBookData = (query, options = {}) => (dispatch, getState) => {
 }
 
 export { getBookAction, getBookData }
-export const { reset } = bookReducers.actions
+export const { reset, actIsAdd } = bookReducers.actions
 export default bookReducers
 

@@ -21,7 +21,7 @@ const Contents = styled.div`
 `
 
 
-const Weblist = ({ data }) => {
+const WebList = ({ data }) => {
 	return (
 		<List href={ data.url } target="_blank">
 			<Titles>
@@ -35,4 +35,4 @@ const Weblist = ({ data }) => {
 	);
 }
 
-export default Weblist;
+export default React.memo(WebList)

@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components'
 import { color, media, font } from '../styled/variables'
 
-import Title from './list/Title'
 import Time from './list/Time'
 import Image from './list/Image'
 
@@ -45,7 +44,7 @@ const Name = styled.div`
 	color: ${ color.grey }
 `
 
-const Imglist = ({ data, handle }) => {
+const ImgList = ({ data, handle }) => {
 
 	const onModalShow =useCallback(() => {
 		handle(data.image_url, data.thumbnail_url)
@@ -66,4 +65,4 @@ const Imglist = ({ data, handle }) => {
 	);
 }
 
-export default Imglist;
+export default React.memo(ImgList)

@@ -90,7 +90,7 @@ const Status = styled.span`
 
 const noImg = '//via.placeholder.com/120x174/d3213e/FFFFFF?text=no+Image'
 
-const Booklist = ({ data }) => {
+const BookList = ({ data }) => {
 
 	return (
 		<List>
@@ -119,4 +119,4 @@ const Booklist = ({ data }) => {
 	);
 }
 
-export default Booklist;
+export default React.memo(BookList)
