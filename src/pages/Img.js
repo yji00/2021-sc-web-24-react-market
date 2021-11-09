@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  getImgData, reset, actIsAdd } from '../store/reducers/imgReducer'
+import { getImgData, reset, actIsAdd } from '../store/reducers/imgReducer'
 import { v4 as uuid } from 'uuid'
-import { InView  } from 'react-intersection-observer';
+import { InView } from 'react-intersection-observer';
 
 import styled from 'styled-components'
-import { font, color } from '../styled'
 
 import Modal from '../components/Modal'
 import Logo from '../components/Logo'
@@ -33,6 +32,7 @@ const Header = styled.header`
 const Img = () => {
 	const dispatch = useDispatch();
 	const query = useSelector(state => state.data.query)
+	const listCnt = useSelector(state => state.img.listCnt)
 	const imgList = useSelector(state => state.img.lists)
 	const [page, setPage] = useState(1)
 	const [modal, setModal] = useState(false)
@@ -54,12 +54,13 @@ const Img = () => {
 	}, [dispatch, query]);
 
 	const onChangeView = useCallback((inView, entry) => {
-		if(inView && page < 50) {
+		console.log(imgList.length, listCnt, inView)
+		if(inView && page < 50 && imgList.length < listCnt) {
 			dispatch(actIsAdd(true))
 			dispatch(getImgData(query, { page: page + 1 }))
 			setPage(page + 1)
 		}
-	}, [dispatch, page, query])
+	}, [dispatch, page, query, listCnt, imgList])
 
 	const handleModalClose = useCallback(v => {
 		setModal(v)

@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  getClipData, reset, actIsAdd } from '../store/reducers/clipReducer'
+import { getClipData, reset, actIsAdd } from '../store/reducers/clipReducer'
 import { v4 as uuid } from 'uuid'
 import { InView } from 'react-intersection-observer';
 
 import styled from 'styled-components'
-import { font, color } from '../styled'
 
 import Logo from '../components/Logo'
 import Search from '../components/Search'
@@ -32,6 +31,7 @@ const Header = styled.header`
 const Clip = () => {
 	const dispatch = useDispatch();
 	const query = useSelector(state => state.data.query)
+	const listCnt = useSelector(state => state.clip.listCnt)
 	const clipList = useSelector(state => state.clip.lists)
 	const [page, setPage] = useState(1)
 	
@@ -51,13 +51,13 @@ const Clip = () => {
 
 	const onChangeView = useCallback((inView, entry) => {
 		if(inView) {
-			if(inView && page < 50) {
+			if(inView && page < 50 && clipList.length < listCnt) {
 				dispatch(actIsAdd(true))
 				dispatch(getClipData(query, { page: page + 1 }))
 				setPage(page + 1)
 			}
 		}
-	}, [dispatch, page, query])
+	}, [dispatch, page, query, listCnt, clipList])
 
 	return (
 		<Wrapper>

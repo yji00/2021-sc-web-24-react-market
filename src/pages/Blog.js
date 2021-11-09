@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {  getBlogData, reset, actIsAdd } from '../store/reducers/blogReducer'
+import { getBlogData, reset, actIsAdd } from '../store/reducers/blogReducer'
 import { v4 as uuid } from 'uuid'
 import { InView } from 'react-intersection-observer';
 
 import styled from 'styled-components'
-import { font, color } from '../styled'
 
 import Logo from '../components/Logo'
 import Search from '../components/Search'
@@ -32,6 +31,7 @@ const Header = styled.header`
 const Blog = () => {
 	const dispatch = useDispatch();
 	const query = useSelector(state => state.data.query)
+	const listCnt = useSelector(state => state.blog.listCnt)
 	const blogList = useSelector(state => state.blog.lists)
 	const [page, setPage] = useState(1)
 	
@@ -50,12 +50,12 @@ const Blog = () => {
 	}, [dispatch, query]);
 	
 	const onChangeView = useCallback((inView, entry) => {
-		if(inView && page < 50) {
+		if(inView && page < 50 && blogList.length < listCnt) {
 			dispatch(actIsAdd(true))
 			dispatch(getBlogData(query, { page: page + 1 }))
 			setPage(page + 1)
 		}
-	}, [dispatch, page, query])
+	}, [dispatch, page, query, listCnt, blogList])
 
 	return (
 		<Wrapper>
